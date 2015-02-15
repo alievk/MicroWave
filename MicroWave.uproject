@@ -1,0 +1,16 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{C35A0C14-4CF1-CFB6-CB19-5FBE04994413}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "MicroWave",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	],
+	"TargetPlatforms": [
+		"WindowsNoEditor"
+	]
+}
