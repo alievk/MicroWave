@@ -7,6 +7,9 @@ MicroWave is a non-commercial stealth-action video game, based on Unreal Engine 
 For demo video, check out the Youtube channel  
 http://www.youtube.com/channel/UCLC50gHellyKa74oWLRNBCA
 
+Game discussion  
+https://forums.unrealengine.com/showthread.php?59213-MicroWave&p=223299#post223299
+
 ## Contacts
 alievk91@gmail.com  
 https://www.linkedin.com/in/duburlan
