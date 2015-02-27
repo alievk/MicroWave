@@ -123,8 +123,8 @@ void AMWCharacter::SetupPlayerInputComponent(class UInputComponent* InputCompone
 	InputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
 	InputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 
-	InputComponent->BindAxis("MoveForward", this, &AMWCharacter::MoveForward);
-	InputComponent->BindAxis("MoveRight", this, &AMWCharacter::MoveRight);
+	/*InputComponent->BindAxis("MoveForward", this, &AMWCharacter::MoveForward);
+	InputComponent->BindAxis("MoveRight", this, &AMWCharacter::MoveRight);*/
 }
 
 void AMWCharacter::OnStartFire()
@@ -157,6 +157,7 @@ void AMWCharacter::MoveForward(float Scale)
 	{
 		FVector forwardDir = GetControlRotation().Vector();
 		AddMovementInput(forwardDir, Scale);
+		//AddMovementInput(ForwardVector, Scale);
 	}
 }
 
@@ -166,7 +167,13 @@ void AMWCharacter::MoveRight(float Scale)
 	{
 		FVector rightDir = FVector(0.f, 0.f, 1.f) ^ GetControlRotation().Vector();
 		AddMovementInput(rightDir, Scale);
+		//AddMovementInput(RightVector, Scale);
 	}
+}
+
+bool AMWCharacter::IsLeaningWall() const
+{
+	return bLeaningWall;
 }
 
 bool AMWCharacter::Hurt(int32 Pain)

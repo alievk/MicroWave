@@ -23,7 +23,7 @@ void AMWPatController::Possess(APawn* InPawn)
 	if (Pat && Pat->Behavior)
 	{
 		// how this blackboard component knows about the behavior tree this controller running?
-		BlackboardComp->InitializeBlackboard(Pat->Behavior->BlackboardAsset);
+		BlackboardComp->InitializeBlackboard(*Pat->Behavior->BlackboardAsset);
 
 		BehaviorComp->StartTree(*(Pat->Behavior));
 		

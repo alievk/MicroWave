@@ -61,6 +61,10 @@ public:
 	/** Move character right/left */
 	void MoveRight(float Scale);
 
+	/** Returns true if character is leaning againts a wall */
+	UFUNCTION(BlueprintCallable, Category = Control)
+	bool IsLeaningWall() const;
+
 	// ///////////////////////////////////////////////////////////////
 	// Health
 
@@ -116,14 +120,18 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = Inventory)
 	FName BatterySocketName;
 
-
-
 	// ///////////////////////////////////////////////////////////////
 	// Control
 
 	/** If true, turns body if the angle between the aim and the actor is greater than the aiming yaw angle limit */
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Camera)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category=Control)
 	uint8 bTurnBodyToAim : 1;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Control)
+	FVector ForwardVector;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Control)
+	FVector RightVector;
 
 	// ///////////////////////////////////////////////////////////////
 	// Health
@@ -138,6 +146,9 @@ private:
 
 private:
 
+	/** This var is set true, when leaning against walls */
+	UPROPERTY(Transient)
+	uint8 bLeaningWall : 1;
 };
 
 // /////////////////////////////////////////////////////

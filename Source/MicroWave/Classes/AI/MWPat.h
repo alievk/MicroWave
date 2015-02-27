@@ -1,4 +1,4 @@
-
+// K. A. Aliev
 
 #pragma once
 
@@ -128,11 +128,17 @@ protected:
 
 	/** Static mesh which immitates jet fire shape (left and right) */
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
-	class UStaticMeshComponent* JetFireMesh[2];
+	class UStaticMeshComponent* JetFireMesh_Left;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
+	class UStaticMeshComponent* JetFireMesh_Right;
 
 	/** Socket names of the body mesh where jet fire meshes are attached to (left and right) */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	FName JetFireSocket[2];
+	FName JetFireSocket_Left;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FName JetFireSocket_Right;
 
 	/** Health component */
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)

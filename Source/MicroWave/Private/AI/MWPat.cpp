@@ -76,10 +76,10 @@ AMWPat::AMWPat(const FObjectInitializer& OI)
 	Weapon->AttachParent = Sensor;
 
 	// Jet fire meshes (attachment upon archetype init)
-	JetFireMesh[0] = OI.CreateDefaultSubobject<UStaticMeshComponent>(this, TEXT("JetFireMesh_Left"));
-	JetFireMesh[1] = OI.CreateDefaultSubobject<UStaticMeshComponent>(this, TEXT("JetFireMesh_Right"));
-	JetFireMesh[0]->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
-	JetFireMesh[1]->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+	JetFireMesh_Left = OI.CreateDefaultSubobject<UStaticMeshComponent>(this, TEXT("JetFireMesh_Left"));
+	JetFireMesh_Right = OI.CreateDefaultSubobject<UStaticMeshComponent>(this, TEXT("JetFireMesh_Right"));
+	JetFireMesh_Left->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+	JetFireMesh_Right->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 
 	// Health component
 	HealthComponent = OI.CreateDefaultSubobject<UMWBotHealthComponent>(this, TEXT("HealthComponent"));
@@ -95,8 +95,8 @@ void AMWPat::PostInitializeComponents()
 		Sensor->AttachTo(GetMesh(), SensorSocket, EAttachLocation::SnapToTarget, false);
 	//	Weapon->AttachTo(GetMesh(), WeaponSocket, EAttachLocation::SnapToTarget, false);
 
-		JetFireMesh[0]->AttachTo(GetMesh(), JetFireSocket[0], EAttachLocation::SnapToTarget, false);
-		JetFireMesh[1]->AttachTo(GetMesh(), JetFireSocket[1], EAttachLocation::SnapToTarget, false);
+		JetFireMesh_Left->AttachTo(GetMesh(), JetFireSocket_Left, EAttachLocation::SnapToTarget, false);
+		JetFireMesh_Right->AttachTo(GetMesh(), JetFireSocket_Right, EAttachLocation::SnapToTarget, false);
 	}
 
 	GetCharacterMovement()->MaxWalkSpeed = PatrolLocomotionSpeed;
@@ -245,8 +245,8 @@ void AMWPat::OnKaput()
 	Lightcone->SetVisibility(false);
 
 	// Turn off jets
-	JetFireMesh[0]->SetVisibility(false);
-	JetFireMesh[1]->SetVisibility(false);
+	JetFireMesh_Left->SetVisibility(false);
+	JetFireMesh_Right->SetVisibility(false);
 
 	// Turn off light
 	SpotLight->SetVisibility(false);
