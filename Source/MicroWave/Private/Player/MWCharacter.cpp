@@ -1,8 +1,9 @@
 // K. A. Aliev
 
 #include "MicroWave.h"
-//#include "CableComponent.h"
-//#include "ModuleManager.h"
+#include "Player/MWCharacter.h"
+#include "Inventory/MWGun.h"
+#include "Inventory/MWBattery.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AMWCharacter
@@ -16,6 +17,7 @@ AMWCharacter::AMWCharacter(const FObjectInitializer& OI)
 	// Movement
 	UCharacterMovementComponent* Movement = GetCharacterMovement();
 	Movement->bOrientRotationToMovement = true; // Orient the character along the moving direction
+	Movement->GetNavAgentPropertiesRef().bCanCrouch = true;
 	//Movement->RotationRate = FRotator(0.f, 640.f, 0.f);
 	//Movement->bConstrainToPlane = true;
 	//Movement->bSnapToPlaneAtStart = true;

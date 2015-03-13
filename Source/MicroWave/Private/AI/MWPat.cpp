@@ -1,6 +1,13 @@
 // K.A. Aliev
 
 #include "MicroWave.h"
+#include "AI/MWPat.h"
+#include "AI/MWPatController.h"
+#include "AI/MWBotSensorComponent.h"
+#include "AI/MWBotWeaponComponent.h"
+#include "AI/MWBotHealthComponent.h"
+#include "Visual/MWLightconeMeshComponent.h"
+
 #include "BehaviorTree/BehaviorTreeComponent.h"
 
 AMWPat::AMWPat(const FObjectInitializer& OI)
@@ -126,7 +133,7 @@ void AMWPat::ApplyTilt(float DeltaTime)
 
 	// calc acceleration
 	const FVector velocity = GetRootComponent()->GetComponentVelocity();
-	const FVector velOrt = velocity.SafeNormal();
+	const FVector velOrt = velocity.GetSafeNormal();
 	const FVector accel = (velocity - LastVelocity) * (1.f / DeltaTime);
 	const float maxAccel = GetCharacterMovement()->MaxAcceleration;
 

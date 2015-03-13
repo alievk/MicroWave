@@ -1,6 +1,8 @@
 // K. A. Aliev
 
 #include "MicroWave.h"
+#include "Inventory/MWBattery.h"
+#include "Player/MWCharacter.h"
 
 AMWBattery::AMWBattery(const FObjectInitializer& OI)
 	: Super(OI)

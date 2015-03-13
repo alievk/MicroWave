@@ -1,6 +1,9 @@
 // K.A. Aliev
 
 #include "MicroWave.h"
+#include "AI/MWPat.h"
+#include "AI/MWPatController.h"
+#include "AI/MWWaypoint.h"
 
 AMWWaypoint::AMWWaypoint(const FObjectInitializer& OI)
 	: Super(OI)

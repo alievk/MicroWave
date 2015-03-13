@@ -1,6 +1,8 @@
 // K. A. Aliev
 
 #include "MicroWave.h"
+#include "AI/MWBotHealthComponent.h"
+#include "Interface/Interface_MechanicBot.h"
 
 UMWBotHealthComponent::UMWBotHealthComponent(const FObjectInitializer& OI)
 	: Super(OI)

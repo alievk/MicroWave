@@ -1,6 +1,13 @@
 // K. A. Aliev
 
 #include "MicroWave.h"
+#include "AI/MWMot.h"
+#include "AI/MWBotSensorComponent.h"
+#include "AI/MWBotWeaponComponent.h"
+#include "AI/MWBotHealthComponent.h"
+#include "Visual/MWLightconeMeshComponent.h"
+
+#include "AIController.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 
 //static UMaterialInterface* MotLightconeMaterial;

@@ -4,9 +4,9 @@
 #define __MICROWAVE_H__
 
 #include "Engine.h"
-#include "MicroWaveClasses.h"
 
 #define COLLISION_PROJECTILE	ECC_GameTraceChannel1
 
 
 #endif
+ 

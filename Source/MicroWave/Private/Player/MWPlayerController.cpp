@@ -1,6 +1,8 @@
 // K. A. Aliev
 
 #include "MicroWave.h"
+#include "Player/MWPlayerController.h"
+#include "Player/MWCharacter.h"
 
 AMWPlayerController::AMWPlayerController(const FObjectInitializer& OI)
 	: Super(OI)

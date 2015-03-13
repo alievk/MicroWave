@@ -1,7 +1,12 @@
 // K. A. Aliev
 
 #include "MicroWave.h"
-
+#include "Inventory/MWGun.h"
+#include "Inventory/MWBattery.h"
+#include "Visual/MWLightconeMeshComponent.h"
+#include "Interface/Interface_MechanicBot.h"
+#include "Player/MWPlayerController.h"
+#include "Player/MWCharacter.h"
 
 AMWGun::AMWGun(const FObjectInitializer& OI)
 	: Super(OI)
@@ -215,11 +220,11 @@ FVector AMWGun::GetShootingDirection() const
 		// Check what was hit
 		if (Hit.bBlockingHit)
 		{
-			ShootDir = (Hit.ImpactPoint - GetMuzzleLocation()).SafeNormal();
+			ShootDir = (Hit.ImpactPoint - GetMuzzleLocation()).GetSafeNormal();
 		}
 		else
 		{
-			ShootDir = (EndTrace - StartTrace).SafeNormal();
+			ShootDir = (EndTrace - StartTrace).GetSafeNormal();
 		}
 	}
 

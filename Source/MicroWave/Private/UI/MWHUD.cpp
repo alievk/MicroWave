@@ -1,6 +1,9 @@
 // K.A. Aliev
 
 #include "MicroWave.h"
+#include "UI/MWHUD.h"
+#include "Player/MWCharacter.h"
+#include "Inventory/MWGun.h"
 
 AMWHUD::AMWHUD(const FObjectInitializer& OI) : Super(OI)
 {

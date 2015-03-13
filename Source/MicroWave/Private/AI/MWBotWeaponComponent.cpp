@@ -1,6 +1,8 @@
 // K. A. Aliev
 
 #include "MicroWave.h"
+#include "AI/MWBotWeaponComponent.h"
+#include "Player/MWCharacter.h"
 
 UMWBotWeaponComponent::UMWBotWeaponComponent(const FObjectInitializer& OI)
 	: Super(OI)

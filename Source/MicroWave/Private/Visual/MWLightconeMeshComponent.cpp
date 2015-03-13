@@ -1,6 +1,7 @@
 // K.A. Aliev
 
 #include "MicroWave.h"
+#include "Visual/MWLightconeMeshComponent.h"
 
 UMWLightconeMeshComponent::UMWLightconeMeshComponent(const FObjectInitializer& OI)
 	: Super(OI)
@@ -63,7 +64,7 @@ bool UMWLightconeMeshComponent::PointInViewangle(const FVector& Point) const
 {
 	// Calculate dot product of two vector and check the angle between them
 	
-	FVector toPoint = (Point - GetFocalPoint()).SafeNormal();
+	FVector toPoint = (Point - GetFocalPoint()).GetSafeNormal();
 	FVector sightOrt = GetComponentRotation().Vector();
 	float dotProd = toPoint | sightOrt;
 	float cosA = FMath::Cos(GetOpeningAngle());
@@ -263,8 +264,8 @@ void UMWLightconeMeshComponent::UpdateMesh()
 		{
 			const float meshUStep = edgeLength / MeshUSegments;
 
-			const FVector iOrt = (EdgeEnd[i] - EdgeStart[i]).SafeNormal();
-			const FVector iiOrt = (EdgeEnd[ii] - EdgeStart[ii]).SafeNormal();
+			const FVector iOrt = (EdgeEnd[i] - EdgeStart[i]).GetSafeNormal();
+			const FVector iiOrt = (EdgeEnd[ii] - EdgeStart[ii]).GetSafeNormal();
 
 			const FVector v11 = EdgeStart[i] + iOrt * k * meshUStep;
 			const FVector v21 = v11 + iOrt * meshUStep;
@@ -340,6 +341,6 @@ void UMWLightconeMeshComponent::UpdateMesh()
 
 //DrawDebugLine(GetWorld(), wEdgeStart, hit.ImpactPoint, FColor::Red);
 //const float newLength = (hit.ImpactPoint - wEdgeStart).Size();
-//EdgeEnd[i] = EdgeStart[i] + (EdgeEnd[i] - EdgeStart[i]).SafeNormal() * newLength;
+//EdgeEnd[i] = EdgeStart[i] + (EdgeEnd[i] - EdgeStart[i]).GetSafeNormal() * newLength;
 //shortestX = FMath::Min(shortestX, EdgeEnd[i].X);
 //EdgeImpactPoint[i] = hit.ImpactPoint;

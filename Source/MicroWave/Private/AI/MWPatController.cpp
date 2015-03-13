@@ -1,6 +1,10 @@
 // K.A. Aliev
 
 #include "MicroWave.h"
+#include "AI/MWPatController.h"
+#include "AI/MWPat.h"
+#include "AI/MWWaypoint.h"
+
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"

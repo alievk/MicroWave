@@ -31,7 +31,7 @@ Intermediate/**
 Plugins/**/Intermediate/**
 Build/**
 
-# NOTE: For now, we'll commit executable binaries too (game DLLs)
+# Ignore binaries
 Binaries/**
 Plugins/**/Binaries/**
 

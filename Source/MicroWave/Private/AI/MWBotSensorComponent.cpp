@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "MicroWave.h"
+#include "AI/MWBotSensorComponent.h"
 
 UMWBotSensorComponent::UMWBotSensorComponent(const FObjectInitializer& OI)
 	: Super(OI)
@@ -75,7 +76,7 @@ bool UMWBotSensorComponent::CheckAOS(const AActor* Actor, float Angle) const
 		return false;
 	}
 
-	const FVector toActor = (Actor->GetActorLocation() - GetComponentLocation()).SafeNormal();
+	const FVector toActor = (Actor->GetActorLocation() - GetComponentLocation()).GetSafeNormal();
 	const FVector sightOrt = GetComponentRotation().Vector();
 	const float dotProd = toActor | sightOrt;
 	const float cosA = FMath::Cos(FMath::DegreesToRadians(Angle));
