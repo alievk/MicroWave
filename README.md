@@ -10,4 +10,4 @@ Discuss the game on [UE4 forum thread](https://forums.unrealengine.com/showthrea
 
 ## Contacts
 alievk91@gmail.com  
-https://www.linkedin.com/in/duburlan
+[LinkedIn](https://www.linkedin.com/in/duburlan)
