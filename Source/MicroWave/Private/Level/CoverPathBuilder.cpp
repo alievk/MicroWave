@@ -5,6 +5,7 @@
 #include "Level/WallDenotation.h"
 #include "FunctionLibrary/MWHelper.h"
 #include "DrawDebugHelpers.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 // Sets default values
 ACoverPathBuilder::ACoverPathBuilder(const FObjectInitializer& OI)
@@ -51,6 +52,99 @@ void ACoverPathBuilder::Tick( float DeltaTime )
 	{
 		DrawCoverPoints();
 	}
+}
+
+bool ACoverPathBuilder::FindNearestCoverPoint(FCoverPoint& OutCoverPoint, ACharacter* Pawn, const float SearchRadius) const
+{
+	check(Pawn)
+
+	// Find all the cover points in the given distance from the pawn
+	const FVector PawnFeetLocation = Pawn->GetMovementComponent()->GetActorFeetLocation();
+	TArray<FCoverPoint> CoverPointsNearby;
+	for (FCoverPath CoverPath : LevelCoverPath)
+	{
+		for (FCoverPoint CoverPoint : CoverPath.CoverPoints)
+		{
+			const float Dist = FVector::Dist(PawnFeetLocation, CoverPoint.Location);
+			if (Dist < SearchRadius)
+			{
+				CoverPointsNearby.Add(CoverPoint);
+			}
+		}
+	}
+
+	// Find all the cover points which could be reached by a straight movement
+	const FVector TraceStart = Pawn->GetActorLocation();
+	const UCapsuleComponent* PawnCapsule = Pawn->GetCapsuleComponent();
+	//TArray<AActor*> DummyArray;
+	TArray<FCoverPoint> ReachableCoverPoints;
+	for (FCoverPoint CoverPoint : CoverPointsNearby)
+	{
+		// Sweep pawn's capsule from the pawn to the cover point and see if there any obstacle
+		const FVector TraceEnd = CoverPoint.Location + FVector(0.f, 0.f, PawnCapsule->GetUnscaledCapsuleHalfHeight());
+		FHitResult HitResult;
+		UKismetSystemLibrary::CapsuleTraceSingle_NEW(
+			Pawn, 
+			TraceStart, 
+			TraceEnd, 
+			PawnCapsule->GetUnscaledCapsuleRadius(), 
+			PawnCapsule->GetUnscaledCapsuleHalfHeight(), 
+			ETraceTypeQuery::TraceTypeQuery1, // Visibility, Camera
+			false, 
+			TArray<AActor*>(), 
+			EDrawDebugTrace::None, 
+			HitResult,
+			true);
+
+		if (!HitResult.bBlockingHit)
+		{
+			ReachableCoverPoints.Add(CoverPoint);
+		}
+	}
+
+	// Find the nearest cover point
+	float NearestDistance = SearchRadius;
+	int32 iNearestCoverPoint = -1; // this means no cover point was found
+	for (int32 i = 0; i < ReachableCoverPoints.Num(); ++i)
+	{
+		const float Dist = FVector::Dist(PawnFeetLocation, ReachableCoverPoints[i].Location);
+		if (Dist < NearestDistance)
+		{
+			iNearestCoverPoint = i;
+			NearestDistance = Dist;
+		}
+	}
+
+	if (-1 != iNearestCoverPoint)
+	{
+		OutCoverPoint = ReachableCoverPoints[iNearestCoverPoint];
+		return true;
+	}
+
+	return false;
+}
+
+bool ACoverPathBuilder::GetLevelCoverPath(FCoverPath& OutCoverPath, const int32 PathIdx) const
+{
+	if (PathIdx >= 0 && PathIdx < LevelCoverPath.Num())
+	{
+		if (PathIdx == LevelCoverPath[PathIdx].PathIdx)
+		{
+			OutCoverPath = LevelCoverPath[PathIdx];
+
+			return true;
+		}
+		else
+		{
+			UE_LOG(LogTemp, Error, TEXT("PathIdx argument is not equal to the PathIdx of the cover path it referencing to"))
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("PathIdx out of range"))
+	}
+
+	return false;
 }
 
 bool ACoverPathBuilder::FindCoverPoint(FCoverPoint& OutCoverPoint, const FVector& FootPoint, const FVector& Direction) const
@@ -205,6 +299,8 @@ void ACoverPathBuilder::FindCoverPathsAlongWall(TArray<FCoverPath>& OutCoverPath
 
 				if (PathFound)
 				{
+					const int32 PathIdx = OutCoverPaths.Num();
+					CoverPath.Init(PathIdx); // assign path index
 					OutCoverPaths.Add(CoverPath);
 				}
 			}

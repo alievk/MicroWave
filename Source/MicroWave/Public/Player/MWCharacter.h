@@ -61,9 +61,9 @@ public:
 	/** Move character right/left */
 	void MoveRight(float Scale);
 
-	/** Returns true if character is leaning againts a wall */
-	UFUNCTION(BlueprintCallable, Category = Control)
-	bool IsLeaningWall() const;
+	/** Returns pointer to the MWCharacterMovement component */
+	UFUNCTION(BlueprintCallable, Category = Movement)
+	class UMWCharacterMovement* GetMWCharacterMovement() const;
 
 	// ///////////////////////////////////////////////////////////////
 	// Health
@@ -144,11 +144,6 @@ private:
 	/** Turn the body towards the aim if the hands aiming angle limit is reached */
 	void TurnToAim();
 
-private:
-
-	/** This var is set true, when leaning against walls */
-	UPROPERTY(Transient)
-	uint8 bLeaningWall : 1;
 };
 
 // /////////////////////////////////////////////////////

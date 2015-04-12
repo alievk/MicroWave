@@ -22,6 +22,14 @@ struct FCoverPoint
 	UPROPERTY()
 	float MaxSafeHeight;
 
+	/** Idx of this cover point in the cover path it belongs to */
+	UPROPERTY()
+	int32 CoverPointIdx;
+
+	/** Idx of the cover path this cover point belongs to */
+	UPROPERTY()
+	int32 PathIdx;
+
 	FCoverPoint()
 	{
 	}
@@ -43,14 +51,32 @@ struct FCoverPath
 	UPROPERTY()
 	TEnumAsByte<EWallHand> WallHand;
 
+	/** This path index in the builder's cover paths array */
+	UPROPERTY()
+	int32 PathIdx;
+
 	FCoverPath()
 	{
+	}
+
+	/** Assign PathIdx and CoverPointIdx. It makes cover path search easier. */
+	void Init(const int32 InPathIdx)
+	{
+		int32 CoverPointIdx = 0;
+		for (FCoverPoint& CoverPoint : CoverPoints)
+		{
+			CoverPoint.PathIdx = InPathIdx;
+			CoverPoint.CoverPointIdx = CoverPointIdx++;
+		}
+		PathIdx = InPathIdx;
 	}
 };
 
 UCLASS()
 class MICROWAVE_API ACoverPathBuilder : public AActor
 {
+	friend class UCoverTakingHelper;
+
 	GENERATED_BODY()
 	
 public:	
@@ -60,6 +86,15 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick( float DeltaSeconds ) override;
 	// End AActor Interface
+
+	/** Looks for the nearest cover point in the level
+	* @param OutCoverPoint [out] Found cover point.
+	* @param SearchRadius Radius of area, where to look for cover points
+	* @return True, if any cover point is found.
+	*/
+	bool FindNearestCoverPoint(FCoverPoint& OutCoverPoint, ACharacter* Pawn, const float SearchRadius = 500.f) const;
+
+	bool GetLevelCoverPath(FCoverPath& OutCoverPath, const int32 PathIdx) const;
 
 protected:
 	/**
@@ -94,7 +129,7 @@ protected:
 	/** Draw cover points in the level */
 	void DrawCoverPoints() const;
 
-protected:
+public:
 
 	/** Root component */
 	//UPROPERTY()
@@ -136,3 +171,4 @@ private:
 	/** Cover paths found in the level. */
 	TArray<FCoverPath> LevelCoverPath;
 };
+

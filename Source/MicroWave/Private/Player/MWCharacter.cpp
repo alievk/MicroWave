@@ -2,14 +2,16 @@
 
 #include "MicroWave.h"
 #include "Player/MWCharacter.h"
+#include "Player/MWCharacterMovement.h"
 #include "Inventory/MWGun.h"
 #include "Inventory/MWBattery.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AMWCharacter
 
-AMWCharacter::AMWCharacter(const FObjectInitializer& OI)
-	: Super(OI)
+AMWCharacter::AMWCharacter(const FObjectInitializer& OI) :
+// Override movement component class of this character
+Super(OI.SetDefaultSubobjectClass<UMWCharacterMovement>(ACharacter::CharacterMovementComponentName))
 {
 	// Aiming animation requires the controller doesnt affect pawn's yaw
 	bUseControllerRotationYaw = false;
@@ -173,9 +175,9 @@ void AMWCharacter::MoveRight(float Scale)
 	}
 }
 
-bool AMWCharacter::IsLeaningWall() const
+UMWCharacterMovement* AMWCharacter::GetMWCharacterMovement() const
 {
-	return bLeaningWall;
+	return Cast<UMWCharacterMovement>(GetCharacterMovement());
 }
 
 bool AMWCharacter::Hurt(int32 Pain)
